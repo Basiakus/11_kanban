@@ -8,8 +8,8 @@
 .column {
     background-color: blue;
     padding: 20px;
-    margin: 0 20px;
-    width: 30%;
+    margin: 10px 20px;
+   width: 20%;
     min-height: 200px;
     border-radius: 5px;
 }
@@ -17,6 +17,9 @@
     display: flex;
     align-items: top;
     width: 100%;
+    flex-wrap: wrap;
+   justify-content: center;
+
 }
 .column-title {
     color: white;
