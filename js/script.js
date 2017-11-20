@@ -14,7 +14,7 @@ $(function() {
         var self = this;
 
         this.id = randomString();
-        this.name = name;
+        this.name = name || "Brak Nazwy";
         this.$element = createColumn();
 
         function createColumn() {
@@ -30,7 +30,7 @@ $(function() {
             });
 
             $columnAddCard.click(function() {
-                self.addCard(new Card(prompt("Nazwa karty")));
+                self.addCard(new Card(prompt("Nazwa karty:")));
             });
 
             $column.append($columnTitle)
@@ -54,22 +54,24 @@ $(function() {
 
     function Card(description) {
         var self = this;
-
         this.id = randomString();
-        this.description = description;
+        this.description = description || "bez nazwy";
         this.$element = createCard();
 
         function createCard() {
-            var $card = $('<li>').addClass('card');
-            var $cardDescription = $('<p>').addClass('card-description').text(self.description);
-            var $cardDelete = $('<button>').addClass('btn-delete').text('x');
-            
-            $cardDelete.click(function() {
-                self.removeCard();
-            });
-            $card.append($cardDelete)
-                .append($cardDescription);
-            return $card;
+            if (self.description != null) {
+                var $card = $('<li>').addClass('card');
+                var $cardDescription = $('<p>').addClass('card-description').text(self.description);
+                var $cardDelete = $('<button>').addClass('btn-delete').text('x');
+                $cardDelete.click(function() {
+                    self.removeCard();
+                });
+                $card.append($cardDelete)
+                    .append($cardDescription);
+                return $card;
+            } else {
+                return false;
+            };
         }
     };
 
@@ -95,12 +97,16 @@ $(function() {
         $element: $('#board .column-container')
     };
 
-    $('.create-column')
-        .click(function() {
-            var name = prompt('Nazwa kolumny');
+    $('.create-column').click(function() {
+        var name = prompt('Nazwa kolumny');
+
+        if (name != null) {
             var column = new Column(name);
             board.addColumn(column);
-        });
+        } else {
+            return false;
+        }
+    });
 
     var todoColumn = new Column('To do');
     var doingColumn = new Column('Doing');
@@ -115,4 +121,6 @@ $(function() {
 
     todoColumn.addCard(card1);
     doingColumn.addCard(card2);
+
+
 });
