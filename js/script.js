@@ -30,7 +30,12 @@ $(function() {
             });
 
             $columnAddCard.click(function() {
-                self.addCard(new Card(prompt("Nazwa karty:")));
+                var cancel = prompt("nazwa karty");
+                if (cancel != null) {
+                    self.addCard(new Card(cancel)); //.addCard??
+                } else {
+                    return false;
+                };
             });
 
             $column.append($columnTitle)
@@ -59,19 +64,15 @@ $(function() {
         this.$element = createCard();
 
         function createCard() {
-            if (self.description != null) {
-                var $card = $('<li>').addClass('card');
-                var $cardDescription = $('<p>').addClass('card-description').text(self.description);
-                var $cardDelete = $('<button>').addClass('btn-delete').text('x');
-                $cardDelete.click(function() {
-                    self.removeCard();
-                });
-                $card.append($cardDelete)
-                    .append($cardDescription);
-                return $card;
-            } else {
-                return false;
-            };
+            var $card = $('<li>').addClass('card');
+            var $cardDescription = $('<p>').addClass('card-description').text(self.description);
+            var $cardDelete = $('<button>').addClass('btn-delete').text('x');
+            $cardDelete.click(function() {
+                self.removeCard();
+            });
+            $card.append($cardDelete)
+                .append($cardDescription);
+            return $card;
         }
     };
 
